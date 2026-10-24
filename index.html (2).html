@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>All in One PDF - Free Merge, Split, Rotate, Watermark & JPG to PDF Converter</title>
+  <meta name="description" content="All in One PDF provides 100% free online PDF tools. Easily merge PDF files, split and extract pages, rotate pages, add watermark, and convert JPG to PDF with crop and live preview directly in your browser.">
+  <meta name="keywords" content="all in one pdf, merge pdf online free, split pdf, extract pdf pages, rotate pdf, watermark pdf, jpg to pdf converter, free online pdf tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vk2042597-netizen.github.io/image-to-pdf/">
+
+  <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca' }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- PDF & Image Processing Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
+  <style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+    }
+    .dark .glass-card {
+      background: rgba(17, 24, 39, 0.88);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
+
+  <!-- Header -->
+  <header class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTool('dashboard')">
+        <img src="logo.png" alt="All in One PDF Logo" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='flex';" class="w-9 h-9 rounded-xl object-contain shadow-sm">
+        <div id="fallbackIcon" style="display: none;" class="w-9 h-9 rounded-xl bg-indigo-600 text-white items-center justify-center font-bold shadow-md shadow-indigo-500/20">
+          <i class="fa-solid fa-file-pdf"></i>
+        </div>
+        <span class="font-bold text-lg tracking-tight">All in One <span class="text-indigo-600">PDF</span></span>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <button onclick="switchTool('dashboard')" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <i class="fa-solid fa-grid-2 mr-1"></i> All Tools
+        </button>
+        <button id="themeToggle" class="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <i class="fa-regular fa-moon dark:hidden"></i>
+          <i class="fa-regular fa-sun hidden dark:block"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- VIEW 1: DASHBOARD -->
+  <section id="viewDashboard" class="max-w-6xl mx-auto px-4 py-10 flex-1 w-full space-y-10">
+    <div class="text-center max-w-2xl mx-auto space-y-2">
+      <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Every PDF tool you need in one place</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">100% Free, secure, client-side execution. Your files never touch external servers.</p>
+    </div>
+
+    <!-- Category: Convert to PDF -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Convert to PDF</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('jpgToPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-regular fa-images"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">JPG to PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Convert JPG, PNG, WEBP images to PDF with crop, rotate, and live preview.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Organize PDF -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Organize PDF</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('mergePdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-code-merge"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Merge PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Combine multiple PDF files into one unified document.</p>
+        </div>
+
+        <div onclick="switchTool('splitPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-scissors"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Split & Extract PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Extract specific page ranges (e.g. 1-3, 5) or separate document pages.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Edit & Security -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Edit & Security</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('rotatePdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-rotate-right"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Rotate PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Rotate orientation of PDF pages 90°, 180°, or 270° permanently.</p>
+        </div>
+
+        <div onclick="switchTool('watermarkPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-stamp"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Add Watermark</h3>
+          <p class="text-xs text-slate-500 mt-1">Stamp custom text watermarks across every page.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIEW 2: JPG TO PDF -->
+  <main id="viewJpgToPdf" class="hidden max-w-6xl mx-auto px-4 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="lg:col-span-2 space-y-6">
+      <div class="flex items-center justify-between">
+        <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+        </button>
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">JPG to PDF</span>
+      </div>
+
+      <div id="dropZone" class="border-2 border-dashed border-indigo-300 dark:border-indigo-800/80 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 bg-white dark:bg-slate-900/40 transition shadow-sm">
+        <input type="file" id="fileInput" multiple accept="image/*" class="hidden">
+        <div class="w-14 h-14 mx-auto rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center text-2xl mb-3">
+          <i class="fa-solid fa-cloud-arrow-up"></i>
+        </div>
+        <h2 class="text-base font-semibold">Drop images here, or <span class="text-indigo-600 dark:text-indigo-400 underline">browse</span></h2>
+        <p class="text-xs text-slate-500 mt-1">Supports JPG, PNG, WEBP, BMP</p>
+      </div>
+
+      <div id="listControls" class="hidden flex items-center justify-between">
+        <span class="text-sm font-medium text-slate-500"><span id="itemCount">0</span> images selected</span>
+        <button id="clearAllBtn" class="text-xs font-semibold text-rose-500 hover:text-rose-600 flex items-center gap-1">
+          <i class="fa-solid fa-trash-can"></i> Clear All
+        </button>
+      </div>
+
+      <div id="imageGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+    </div>
+
+    <!-- Settings Sidebar -->
+    <div class="space-y-6">
+      <div class="glass-card border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-5">
+        <h3 class="text-base font-bold flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-indigo-500"></i> Settings
+        </h3>
+
+        <div>
+          <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Page Size</label>
+          <select id="pageSize" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+            <option value="a4" selected>A4 (Standard)</option>
+            <option value="letter">US Letter</option>
+            <option value="fit">Fit to Image Size</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Orientation</label>
+          <select id="pageOrientation" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+            <option value="portrait" selected>Portrait</option>
+            <option value="landscape">Landscape</option>
+            <option value="auto">Auto Detect</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Page Margins</label>
+          <select id="pageMargin" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+            <option value="0" selected>No Margin (Full Bleed)</option>
+            <option value="8">Small (8 mm)</option>
+            <option value="15">Normal (15 mm)</option>
+          </select>
+        </div>
+
+        <button id="generatePdfBtn" disabled class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-eye"></i> Generate & View PDF
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- VIEW 3: MERGE PDF -->
+  <main id="viewMergePdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Merge PDF Files</h2>
+        <p class="text-xs text-slate-500">Select multiple PDF files to combine them into one document.</p>
+      </div>
+
+      <div onclick="document.getElementById('mergeFileInput').click()" class="border-2 border-dashed border-rose-300 dark:border-rose-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-rose-500 transition">
+        <input type="file" id="mergeFileInput" multiple accept=".pdf" class="hidden">
+        <i class="fa-solid fa-file-pdf text-3xl text-rose-500 mb-2"></i>
+        <p class="text-sm font-semibold">Click to choose multiple PDF files</p>
+      </div>
+
+      <div id="mergeFileList" class="space-y-2"></div>
+
+      <button id="runMergeBtn" disabled class="w-full py-3 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Merge PDF Files Now
+      </button>
+    </div>
+  </main>
+
+  <!-- VIEW 4: SPLIT PDF -->
+  <main id="viewSplitPdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Split & Extract PDF Pages</h2>
+        <p class="text-xs text-slate-500">Upload a PDF and select specific page ranges to extract.</p>
+      </div>
+
+      <div onclick="document.getElementById('splitFileInput').click()" class="border-2 border-dashed border-orange-300 dark:border-orange-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-orange-500 transition">
+        <input type="file" id="splitFileInput" accept=".pdf" class="hidden">
+        <i class="fa-solid fa-scissors text-3xl text-orange-500 mb-2"></i>
+        <p id="splitFileName" class="text-sm font-semibold">Click to choose a PDF file</p>
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1">Page Range to Extract</label>
+        <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+        <span class="text-[11px] text-slate-400 mt-1 block">Example: "1-2" extracts pages 1 and 2.</span>
+      </div>
+
+      <button id="runSplitBtn" disabled class="w-full py-3 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Extract Pages & Download
+      </button>
+    </div>
+  </main>
+
+  <!-- VIEW 5: ROTATE PDF -->
+  <main id="viewRotatePdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Rotate PDF</h2>
+        <p class="text-xs text-slate-500">Permanently rotate all pages of your PDF document.</p>
+      </div>
+
+      <div onclick="document.getElementById('rotateFileInput').click()" class="border-2 border-dashed border-purple-300 dark:border-purple-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-purple-500 transition">
+        <input type="file" id="rotateFileInput" accept=".pdf" class="hidden">
+        <i class="fa-solid fa-rotate text-3xl text-purple-500 mb-2"></i>
+        <p id="rotateFileName" class="text-sm font-semibold">Click to choose a PDF file</p>
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1">Rotation Angle</label>
+        <select id="rotateAngle" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+          <option value="90">90 Degrees Clockwise</option>
+          <option value="180">180 Degrees (Upside Down)</option>
+          <option value="270">270 Degrees</option>
+        </select>
+      </div>
+
+      <button id="runRotateBtn" disabled class="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Rotate PDF & Download
+      </button>
+    </div>
+  </main>
+
+  <!-- VIEW 6: WATERMARK PDF -->
+  <main id="viewWatermarkPdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Add Text Watermark</h2>
+        <p class="text-xs text-slate-500">Stamp a custom transparent watermark across every document page.</p>
+      </div>
+
+      <div onclick="document.getElementById('watermarkFileInput').click()" class="border-2 border-dashed border-blue-300 dark:border-blue-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition">
+        <input type="file" id="watermarkFileInput" accept=".pdf" class="hidden">
+        <i class="fa-solid fa-stamp text-3xl text-blue-500 mb-2"></i>
+        <p id="watermarkFileName" class="text-sm font-semibold">Click to choose a PDF file</p>
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1">Watermark Text</label>
+        <input type="text" id="watermarkText" placeholder="e.g. CONFIDENTIAL" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+      </div>
+
+      <button id="runWatermarkBtn" disabled class="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Apply Watermark & Download
+      </button>
+    </div>
+  </main>
+
+  <!-- Modal: Live PDF Viewer -->
+  <div id="previewModal" class="fixed inset-0 z-50 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <h4 class="font-bold text-base flex items-center gap-2">
+          <i class="fa-solid fa-file-pdf text-indigo-500"></i> PDF Live Preview
+        </h4>
+        <div class="flex items-center gap-2">
+          <button id="modalDownloadBtn" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow">
+            <i class="fa-solid fa-download"></i> Download
+          </button>
+          <button onclick="document.getElementById('previewModal').classList.add('hidden')" class="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-lg">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      </div>
+      <div class="flex-1 bg-slate-100 dark:bg-slate-950 p-2">
+        <iframe id="pdfIframe" class="w-full h-full rounded-xl border border-slate-300 dark:border-slate-800 bg-white" src=""></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Image Crop -->
+  <div id="cropModal" class="fixed inset-0 z-50 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[90vh]">
+      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        <h4 class="font-bold text-base">Crop Image</h4>
+        <button onclick="closeCropper()" class="text-slate-500"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+      <div class="relative bg-slate-950 flex items-center justify-center flex-1 min-h-[300px] max-h-[55vh] overflow-hidden">
+        <img id="cropImage" class="max-w-full max-h-full" src="" alt="To Crop">
+      </div>
+      <div class="p-4 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+        <button id="rotateCropBtn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-xs rounded-lg font-medium"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate</button>
+        <div class="flex gap-2">
+          <button onclick="closeCropper()" class="px-4 py-2 border border-slate-300 dark:border-slate-700 text-xs rounded-lg">Cancel</button>
+          <button id="applyCropBtn" class="px-4 py-2 bg-indigo-600 text-white text-xs font-semibold rounded-lg shadow">Apply Crop</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC (Global & Immediate Mobile Touch) -->
+  <script>
+    window.switchTool = function(toolId) {
+      const views = ['viewDashboard', 'viewJpgToPdf', 'viewMergePdf', 'viewSplitPdf', 'viewRotatePdf', 'viewWatermarkPdf'];
+      views.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const map = {
+        'dashboard': 'viewDashboard',
+        'jpgToPdf': 'viewJpgToPdf',
+        'mergePdf': 'viewMergePdf',
+        'splitPdf': 'viewSplitPdf',
+        'rotatePdf': 'viewRotatePdf',
+        'watermarkPdf': 'viewWatermarkPdf'
+      };
+
+      const targetEl = document.getElementById(map[toolId] || 'viewDashboard');
+      if (targetEl) targetEl.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+    }
+
+    /* TOOL 1: JPG TO PDF */
+    let images = [];
+    let cropper = null;
+    let activeCropIndex = null;
+    let generatedPdfBlobUrl = null;
+
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const imageGrid = document.getElementById('imageGrid');
+    const listControls = document.getElementById('listControls');
+    const itemCount = document.getElementById('itemCount');
+    const generatePdfBtn = document.getElementById('generatePdfBtn');
+
+    if (dropZone && fileInput) {
+      dropZone.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => handleImages(e.target.files));
+    }
+
+    function handleImages(files) {
+      Array.from(files).filter(f => f.type.startsWith('image/')).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          images.push({ dataUrl: e.target.result, rotation: 0 });
+          renderImageGrid();
+        };
+        reader.readAsDataURL(file);
+      });
+      fileInput.value = '';
+    }
+
+    function renderImageGrid() {
+      if (!imageGrid) return;
+      imageGrid.innerHTML = '';
+      if (!images.length) {
+        if (listControls) listControls.classList.add('hidden');
+        if (generatePdfBtn) generatePdfBtn.disabled = true;
+        return;
+      }
+      if (listControls) listControls.classList.remove('hidden');
+      if (itemCount) itemCount.innerText = images.length;
+      if (generatePdfBtn) generatePdfBtn.disabled = false;
+
+      images.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'relative group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm flex flex-col';
+        card.innerHTML = `
+          <div class="relative aspect-square bg-slate-100 dark:bg-slate-950 flex items-center justify-center p-2">
+            <img src="${item.dataUrl}" style="transform: rotate(${item.rotation}deg);" class="max-h-full max-w-full object-contain" />
+            <span class="absolute top-2 left-2 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">${index + 1}</span>
+          </div>
+          <div class="p-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+            <button onclick="openCropper(${index})" title="Crop" class="p-1 hover:text-indigo-600"><i class="fa-solid fa-crop-simple"></i></button>
+            <button onclick="rotateImage(${index})" title="Rotate" class="p-1 hover:text-indigo-600"><i class="fa-solid fa-rotate-right"></i></button>
+            <button onclick="deleteImage(${index})" title="Delete" class="p-1 text-rose-500 hover:text-rose-700 ml-auto"><i class="fa-solid fa-trash-can"></i></button>
+          </div>
+        `;
+        imageGrid.appendChild(card);
+      });
+    }
+
+    window.deleteImage = (idx) => { images.splice(idx, 1); renderImageGrid(); };
+    window.rotateImage = (idx) => { images[idx].rotation = (images[idx].rotation + 90) % 360; renderImageGrid(); };
+    
+    const clearBtn = document.getElementById('clearAllBtn');
+    if (clearBtn) clearBtn.onclick = () => { images = []; renderImageGrid(); };
+
+    window.openCropper = (idx) => {
+      activeCropIndex = idx;
+      document.getElementById('cropImage').src = images[idx].dataUrl;
+      document.getElementById('cropModal').classList.remove('hidden');
+      if (cropper) cropper.destroy();
+      cropper = new Cropper(document.getElementById('cropImage'), { viewMode: 1 });
+    };
+
+    window.closeCropper = function() {
+      document.getElementById('cropModal').classList.add('hidden');
+      if (cropper) { cropper.destroy(); cropper = null; }
+    };
+
+    const rotCrop = document.getElementById('rotateCropBtn');
+    if (rotCrop) rotCrop.onclick = () => cropper && cropper.rotate(90);
+
+    const appCrop = document.getElementById('applyCropBtn');
+    if (appCrop) appCrop.onclick = () => {
+      if (!cropper) return;
+      images[activeCropIndex].dataUrl = cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.92);
+      images[activeCropIndex].rotation = 0;
+      closeCropper();
+      renderImageGrid();
+    };
+
+    if (generatePdfBtn) {
+      generatePdfBtn.onclick = async () => {
+        const { jsPDF } = window.jspdf;
+        const sizeOpt = document.getElementById('pageSize').value;
+        const orientOpt = document.getElementById('pageOrientation').value;
+        const margin = parseInt(document.getElementById('pageMargin').value, 10);
+        let doc = null;
+
+        for (let i = 0; i < images.length; i++) {
+          const item = images[i];
+          const img = new Image();
+          img.src = item.dataUrl;
+          await new Promise(r => img.onload = r);
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          if (item.rotation === 90 || item.rotation === 270) {
+            canvas.width = img.height; canvas.height = img.width;
+          } else {
+            canvas.width = img.width; canvas.height = img.height;
+          }
+          ctx.translate(canvas.width / 2, canvas.height / 2);
+          ctx.rotate((item.rotation * Math.PI) / 180);
+          ctx.drawImage(img, -img.width / 2, -img.height / 2);
+          const cleanData = canvas.toDataURL('image/jpeg', 0.92);
+
+          let orient = orientOpt === 'auto' ? (canvas.width > canvas.height ? 'landscape' : 'portrait') : orientOpt;
+          if (!doc) doc = new jsPDF({ orientation: orient, unit: 'mm', format: sizeOpt === 'fit' ? [canvas.width * 0.264, canvas.height * 0.264] : sizeOpt });
+          else doc.addPage(sizeOpt === 'fit' ? [canvas.width * 0.264, canvas.height * 0.264] : sizeOpt, orient);
+
+          const pw = doc.internal.pageSize.getWidth();
+          const ph = doc.internal.pageSize.getHeight();
+          const prW = pw - (margin * 2);
+          const prH = ph - (margin * 2);
+          const ratio = canvas.width / canvas.height;
+          let rW = prW, rH = prW / ratio;
+          if (rH > prH) { rH = prH; rW = prH * ratio; }
+
+          doc.addImage(cleanData, 'JPEG', margin + (prW - rW) / 2, margin + (prH - rH) / 2, rW, rH);
+        }
+
+        const blob = doc.output('blob');
+        if (generatedPdfBlobUrl) URL.revokeObjectURL(generatedPdfBlobUrl);
+        generatedPdfBlobUrl = URL.createObjectURL(blob);
+        document.getElementById('pdfIframe').src = generatedPdfBlobUrl;
+        document.getElementById('previewModal').classList.remove('hidden');
+        document.getElementById('modalDownloadBtn').onclick = () => doc.save('all-in-one-pdf-document.pdf');
+      };
+    }
+
+    /* TOOL 2: MERGE PDF */
+    let mergeFiles = [];
+    const mergeFileInput = document.getElementById('mergeFileInput');
+    const mergeFileList = document.getElementById('mergeFileList');
+    const runMergeBtn = document.getElementById('runMergeBtn');
+
+    if (mergeFileInput) {
+      mergeFileInput.onchange = (e) => {
+        Array.from(e.target.files).forEach(f => mergeFiles.push(f));
+        renderMergeList();
+        mergeFileInput.value = '';
+      };
+    }
+
+    function renderMergeList() {
+      if (!mergeFileList) return;
+      mergeFileList.innerHTML = '';
+      if (runMergeBtn) runMergeBtn.disabled = mergeFiles.length < 2;
+      mergeFiles.forEach((file, idx) => {
+        const item = document.createElement('div');
+        item.className = 'flex items-center justify-between p-3 bg-slate-100 dark:bg-slate-800 rounded-xl text-xs font-semibold';
+        item.innerHTML = `
+          <div class="flex items-center gap-2 truncate">
+            <i class="fa-solid fa-file-pdf text-rose-500"></i>
+            <span class="truncate">${file.name}</span>
+          </div>
+          <button onclick="removeMergeFile(${idx})" class="text-rose-500 hover:text-rose-700 p-1"><i class="fa-solid fa-trash-can"></i></button>
+        `;
+        mergeFileList.appendChild(item);
+      });
+    }
+
+    window.removeMergeFile = (idx) => { mergeFiles.splice(idx, 1); renderMergeList(); };
+
+    if (runMergeBtn) {
+      runMergeBtn.onclick = async () => {
+        const PDFLibInstance = window.PDFLib;
+        if (!PDFLibInstance) return alert('PDF Library loading... Please try again.');
+        runMergeBtn.innerText = 'Merging...';
+        const mergedPdf = await PDFLibInstance.PDFDocument.create();
+        for (const file of mergeFiles) {
+          const bytes = await file.arrayBuffer();
+          const pdf = await PDFLibInstance.PDFDocument.load(bytes);
+          const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+          copiedPages.forEach(p => mergedPdf.addPage(p));
+        }
+        downloadBytes(await mergedPdf.save(), 'merged-document.pdf');
+        runMergeBtn.innerText = 'Merge PDF Files Now';
+      };
+    }
+
+    /* TOOL 3: SPLIT PDF */
+    let splitFile = null;
+    const splitFileInput = document.getElementById('splitFileInput');
+    const runSplitBtn = document.getElementById('runSplitBtn');
+
+    if (splitFileInput) {
+      splitFileInput.onchange = (e) => {
+        if (e.target.files[0]) {
+          splitFile = e.target.files[0];
+          document.getElementById('splitFileName').innerText = splitFile.name;
+          if (runSplitBtn) runSplitBtn.disabled = false;
+        }
+      };
+    }
+
+    if (runSplitBtn) {
+      runSplitBtn.onclick = async () => {
+        const PDFLibInstance = window.PDFLib;
+        if (!PDFLibInstance) return alert('PDF Library loading... Please try again.');
+        runSplitBtn.innerText = 'Processing...';
+        const bytes = await splitFile.arrayBuffer();
+        const pdf = await PDFLibInstance.PDFDocument.load(bytes);
+        const totalPages = pdf.getPageCount();
+        const rangeStr = document.getElementById('splitRangeInput').value.trim();
+
+        const newPdf = await PDFLibInstance.PDFDocument.create();
+        let indices = [];
+
+        if (!rangeStr) {
+          indices = pdf.getPageIndices();
+        } else {
+          const parts = rangeStr.split(',');
+          for (const part of parts) {
+            if (part.includes('-')) {
+              const [start, end] = part.split('-').map(n => parseInt(n.trim(), 10) - 1);
+              for (let i = start; i <= end && i < totalPages; i++) if (i >= 0) indices.push(i);
+            } else {
+              const pageNum = parseInt(part.trim(), 10) - 1;
+              if (pageNum >= 0 && pageNum < totalPages) indices.push(pageNum);
+            }
+          }
+        }
+
+        const copiedPages = await newPdf.copyPages(pdf, Array.from(new Set(indices)));
+        copiedPages.forEach(p => newPdf.addPage(p));
+        downloadBytes(await newPdf.save(), 'extracted-pages.pdf');
+        runSplitBtn.innerText = 'Extract Pages & Download';
+      };
+    }
+
+    /* TOOL 4: ROTATE PDF */
+    let rotateFile = null;
+    const rotateFileInput = document.getElementById('rotateFileInput');
+    const runRotateBtn = document.getElementById('runRotateBtn');
+
+    if (rotateFileInput) {
+      rotateFileInput.onchange = (e) => {
+        if (e.target.files[0]) {
+          rotateFile = e.target.files[0];
+          document.getElementById('rotateFileName').innerText = rotateFile.name;
+          if (runRotateBtn) runRotateBtn.disabled = false;
+        }
+      };
+    }
+
+    if (runRotateBtn) {
+      runRotateBtn.onclick = async () => {
+        const PDFLibInstance = window.PDFLib;
+        if (!PDFLibInstance) return alert('PDF Library loading... Please try again.');
+        runRotateBtn.innerText = 'Rotating...';
+        const bytes = await rotateFile.arrayBuffer();
+        const pdf = await PDFLibInstance.PDFDocument.load(bytes);
+        const angle = parseInt(document.getElementById('rotateAngle').value, 10);
+
+        pdf.getPages().forEach(page => {
+          const currentRotation = page.getRotation().angle;
+          page.setRotation(PDFLibInstance.degrees(currentRotation + angle));
+        });
+
+        downloadBytes(await pdf.save(), 'rotated-document.pdf');
+        runRotateBtn.innerText = 'Rotate PDF & Download';
+      };
+    }
+
+    /* TOOL 5: WATERMARK PDF */
+    let watermarkFile = null;
+    const watermarkFileInput = document.getElementById('watermarkFileInput');
+    const runWatermarkBtn = document.getElementById('runWatermarkBtn');
+
+    if (watermarkFileInput) {
+      watermarkFileInput.onchange = (e) => {
+        if (e.target.files[0]) {
+          watermarkFile = e.target.files[0];
+          document.getElementById('watermarkFileName').innerText = watermarkFile.name;
+          if (runWatermarkBtn) runWatermarkBtn.disabled = false;
+        }
+      };
+    }
+
+    if (runWatermarkBtn) {
+      runWatermarkBtn.onclick = async () => {
+        const PDFLibInstance = window.PDFLib;
+        if (!PDFLibInstance) return alert('PDF Library loading... Please try again.');
+        const text = document.getElementById('watermarkText').value.trim() || 'CONFIDENTIAL';
+        runWatermarkBtn.innerText = 'Applying Watermark...';
+        const bytes = await watermarkFile.arrayBuffer();
+        const pdf = await PDFLibInstance.PDFDocument.load(bytes);
+
+        pdf.getPages().forEach(page => {
+          const { width, height } = page.getSize();
+          page.drawText(text, {
+            x: width / 4,
+            y: height / 2,
+            size: 42,
+            color: PDFLibInstance.rgb(0.7, 0.7, 0.7),
+            opacity: 0.45,
+            rotate: PDFLibInstance.degrees(45)
+          });
+        });
+
+        downloadBytes(await pdf.save(), 'watermarked-document.pdf');
+        runWatermarkBtn.innerText = 'Apply Watermark & Download';
+      };
+    }
+
+    function downloadBytes(bytes, filename) {
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
