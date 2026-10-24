@@ -4,12 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Free Image to PDF Converter - Convert JPG, PNG to PDF Online</title>
-  <meta name="description" content="Convert JPG, PNG, and images to high-quality PDF files for free. Fast, secure, in-browser PDF creator with crop and live preview.">
-  <meta name="keywords" content="image to pdf, convert jpg to pdf, free pdf converter, png to pdf online">
+  <!-- High Ranking Primary Title & SEO Tags -->
+  <title>All in One PDF - Free Merge, Split, Rotate, Watermark & JPG to PDF Converter</title>
+  <meta name="description" content="All in One PDF provides 100% free online PDF tools. Easily merge PDF files, split and extract pages, rotate pages, add watermark, and convert JPG to PDF with crop and live preview directly in your browser.">
+  <meta name="keywords" content="all in one pdf, merge pdf online free, split pdf, extract pdf pages, rotate pdf, watermark pdf, jpg to pdf converter, free online pdf tools, pdf combiner, image to pdf, pdf editor online">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://vk2042597-netizen.github.io/image-to-pdf/">
 
-  <!-- Browser Favicon -->
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="All in One PDF - Free Online PDF Tools Suite">
+  <meta property="og:description" content="Combine, separate, rotate, watermark, and convert documents effortlessly in browser. No file upload to servers, 100% private.">
+  <meta property="og:url" content="https://vk2042597-netizen.github.io/image-to-pdf/">
+  <meta property="og:image" content="logo.png">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="logo.png">
+
+  <!-- Google Structured Data (Schema.org) for Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "All in One PDF",
+    "url": "https://vk2042597-netizen.github.io/image-to-pdf/",
+    "description": "Complete client-side PDF utility tool for merging, splitting, rotating, watermarking, and converting images to PDF.",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 
   <!-- Tailwind CSS & Icons -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -27,491 +55,277 @@
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- jsPDF & Cropper.js -->
+  <!-- PDF & Image Processing Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
   <style>
     .glass-card {
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.88);
       backdrop-filter: blur(12px);
     }
     .dark .glass-card {
-      background: rgba(17, 24, 39, 0.85);
+      background: rgba(17, 24, 39, 0.88);
     }
   </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen flex flex-col font-sans transition-colors duration-200">
 
-  <!-- Header with Logo -->
+  <!-- Header -->
   <header class="border-b border-slate-200 dark:border-slate-800 bg-white/70 dark:bg-slate-900/70 backdrop-blur sticky top-0 z-30">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-2.5">
-        <img src="logo.png" alt="Logo" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='flex';" class="w-9 h-9 rounded-xl object-contain shadow-sm">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="switchTool('dashboard')">
+        <img src="logo.png" alt="All in One PDF Logo" onerror="this.style.display='none'; document.getElementById('fallbackIcon').style.display='flex';" class="w-9 h-9 rounded-xl object-contain shadow-sm">
         <div id="fallbackIcon" style="display: none;" class="w-9 h-9 rounded-xl bg-indigo-600 text-white items-center justify-center font-bold shadow-md shadow-indigo-500/20">
           <i class="fa-solid fa-file-pdf"></i>
         </div>
-        <span class="font-bold text-lg tracking-tight">Image<span class="text-indigo-600">2PDF</span></span>
+        <span class="font-bold text-lg tracking-tight">All in One <span class="text-indigo-600">PDF</span></span>
       </div>
-      <button id="themeToggle" class="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-        <i class="fa-regular fa-moon dark:hidden"></i>
-        <i class="fa-regular fa-sun hidden dark:block"></i>
-      </button>
+      
+      <div class="flex items-center gap-3">
+        <button onclick="switchTool('dashboard')" class="text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <i class="fa-solid fa-grid-2 mr-1"></i> All Tools
+        </button>
+        <button id="themeToggle" class="w-9 h-9 rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <i class="fa-regular fa-moon dark:hidden"></i>
+          <i class="fa-regular fa-sun hidden dark:block"></i>
+        </button>
+      </div>
     </div>
   </header>
 
-  <!-- Main Content -->
-  <main class="max-w-6xl mx-auto px-4 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
-    
-    <!-- Left Section: Upload & Thumbnails -->
+  <!-- ================= VIEW 1: TOOLS DASHBOARD ================= -->
+  <section id="viewDashboard" class="max-w-6xl mx-auto px-4 py-10 flex-1 w-full space-y-10">
+    <div class="text-center max-w-2xl mx-auto space-y-2">
+      <h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Every PDF tool you need in one place</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400">100% Free, secure, client-side execution. Your confidential files never touch external servers.</p>
+    </div>
+
+    <!-- Category: Convert to PDF -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Convert to PDF</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('jpgToPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-regular fa-images"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">JPG to PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Convert JPG, PNG, WEBP images to PDF with crop, rotate, and instant live preview.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Organize PDF -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Organize PDF</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('mergePdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-code-merge"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Merge PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Combine multiple PDF files into one unified document with custom ordering.</p>
+        </div>
+
+        <div onclick="switchTool('splitPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-scissors"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Split & Extract PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Extract specific page ranges (e.g. 1-3, 5) or separate document pages effortlessly.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category: Edit & Security -->
+    <div class="space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400">Edit & Security</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div onclick="switchTool('rotatePdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-rotate-right"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Rotate PDF</h3>
+          <p class="text-xs text-slate-500 mt-1">Rotate orientation of PDF pages 90°, 180°, or 270° permanently.</p>
+        </div>
+
+        <div onclick="switchTool('watermarkPdf')" class="glass-card p-5 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 shadow-sm cursor-pointer transition group">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition">
+            <i class="fa-solid fa-stamp"></i>
+          </div>
+          <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-indigo-600 transition">Add Watermark</h3>
+          <p class="text-xs text-slate-500 mt-1">Stamp custom text watermarks across every page for document protection.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comprehensive SEO Knowledge Section (Indexed by Google for every query) -->
+    <div class="pt-8 border-t border-slate-200 dark:border-slate-800 space-y-6">
+      <h2 class="text-xl font-bold text-slate-900 dark:text-white">Why Choose All in One PDF?</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+        <div class="space-y-1.5">
+          <h3 class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-indigo-500"></i> Zero Server Uploads
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Unlike cloud-based services, your files are never transmitted to any third-party server. All conversions take place in your browser memory.
+          </p>
+        </div>
+        <div class="space-y-1.5">
+          <h3 class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-bolt text-indigo-500"></i> Lightning Fast & No Limits
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Process documents instantly without queues, hourly limitations, or registration requirements. Completely free forever.
+          </p>
+        </div>
+        <div class="space-y-1.5">
+          <h3 class="font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+            <i class="fa-solid fa-crop-simple text-indigo-500"></i> Precise Image Cropping
+          </h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Fine-tune scan borders, adjust margins, rotate photos, and select page formats before compiling high-resolution PDF output.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= VIEW 2: JPG TO PDF WORKSPACE ================= -->
+  <main id="viewJpgToPdf" class="hidden max-w-6xl mx-auto px-4 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
     <div class="lg:col-span-2 space-y-6">
-      <!-- Drop Zone -->
+      <div class="flex items-center justify-between">
+        <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+        </button>
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">JPG to PDF</span>
+      </div>
+
       <div id="dropZone" class="border-2 border-dashed border-indigo-300 dark:border-indigo-800/80 rounded-2xl p-8 text-center cursor-pointer hover:border-indigo-500 dark:hover:border-indigo-500 bg-white dark:bg-slate-900/40 transition shadow-sm">
         <input type="file" id="fileInput" multiple accept="image/*" class="hidden">
         <div class="w-14 h-14 mx-auto rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 flex items-center justify-center text-2xl mb-3">
           <i class="fa-solid fa-cloud-arrow-up"></i>
         </div>
-        <h2 class="text-base font-semibold">Drop your images here, or <span class="text-indigo-600 dark:text-indigo-400 underline">browse</span></h2>
+        <h2 class="text-base font-semibold">Drop images here, or <span class="text-indigo-600 dark:text-indigo-400 underline">browse</span></h2>
         <p class="text-xs text-slate-500 mt-1">Supports JPG, PNG, WEBP, BMP</p>
       </div>
 
-      <!-- Action Bar -->
       <div id="listControls" class="hidden flex items-center justify-between">
-        <span class="text-sm font-medium text-slate-500"><span id="itemCount">0</span> images uploaded</span>
+        <span class="text-sm font-medium text-slate-500"><span id="itemCount">0</span> images selected</span>
         <button id="clearAllBtn" class="text-xs font-semibold text-rose-500 hover:text-rose-600 flex items-center gap-1">
           <i class="fa-solid fa-trash-can"></i> Clear All
         </button>
       </div>
 
-      <!-- Thumbnails Grid -->
       <div id="imageGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
     </div>
 
-    <!-- Right Section: PDF Settings -->
+    <!-- Settings Sidebar -->
     <div class="space-y-6">
       <div class="glass-card border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-5">
         <h3 class="text-base font-bold flex items-center gap-2">
-          <i class="fa-solid fa-sliders text-indigo-500"></i> PDF Settings
+          <i class="fa-solid fa-sliders text-indigo-500"></i> Settings
         </h3>
 
-        <!-- Page Format -->
         <div>
           <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Page Size</label>
-          <select id="pageSize" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <select id="pageSize" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
             <option value="a4" selected>A4 (Standard)</option>
             <option value="letter">US Letter</option>
             <option value="fit">Fit to Image Size</option>
           </select>
         </div>
 
-        <!-- Orientation -->
         <div>
           <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Orientation</label>
-          <select id="pageOrientation" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <select id="pageOrientation" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
             <option value="portrait" selected>Portrait</option>
             <option value="landscape">Landscape</option>
             <option value="auto">Auto Detect</option>
           </select>
         </div>
 
-        <!-- Margin -->
         <div>
           <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1.5">Page Margins</label>
-          <select id="pageMargin" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <select id="pageMargin" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
             <option value="0" selected>No Margin (Full Bleed)</option>
             <option value="8">Small (8 mm)</option>
             <option value="15">Normal (15 mm)</option>
           </select>
         </div>
 
-        <!-- Progress Indicator -->
-        <div id="progressWrapper" class="hidden space-y-1.5">
-          <div class="flex justify-between text-xs font-medium">
-            <span id="progressText">Processing...</span>
-            <span id="progressPercent">0%</span>
-          </div>
-          <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
-            <div id="progressBar" class="bg-indigo-600 h-2 rounded-full w-0 transition-all duration-200"></div>
-          </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="pt-2 space-y-2">
-          <button id="generatePdfBtn" disabled class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-md shadow-indigo-500/20 flex items-center justify-center gap-2 transition">
-            <i class="fa-solid fa-eye"></i> Generate & View PDF
-          </button>
-          
-          <button id="directDownloadBtn" class="hidden w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm">
-            <i class="fa-solid fa-download"></i> Download PDF File
-          </button>
-        </div>
+        <button id="generatePdfBtn" disabled class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+          <i class="fa-solid fa-eye"></i> Generate & View PDF
+        </button>
       </div>
     </div>
   </main>
-<!-- SEO & Guide Section for Google Crawlers -->
-<section class="max-w-6xl mx-auto px-4 py-12 text-slate-700 dark:text-slate-300">
-  <div class="glass-card p-8 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
-    <h2 class="text-xl font-bold text-slate-900 dark:text-white">How to Convert JPG & PNG to PDF Online for Free?</h2>
-    <ol class="list-decimal list-inside space-y-2 text-sm">
-      <li><strong>Select Images:</strong> Drag and drop your JPG, PNG, or WebP files into the upload box.</li>
-      <li><strong>Crop & Reorder:</strong> Use the crop tool to trim images or rotate them to the right orientation.</li>
-      <li><strong>Choose Page Format:</strong> Set your preferred page size (A4, Letter, or Fit to image) and adjust margins.</li>
-      <li><strong>Preview & Download:</strong> Click "Generate & View PDF" to review your file live and download it immediately.</li>
-    </ol>
-    <div class="pt-4 border-t border-slate-200 dark:border-slate-800">
-      <h3 class="font-semibold text-sm mb-1 text-slate-900 dark:text-white">100% Secure & Client-Side</h3>
-      <p class="text-xs text-slate-500 leading-relaxed">
-        Your photos never leave your device. All PDF conversion and processing happens entirely inside your browser, ensuring complete privacy.
-      </p>
+
+  <!-- ================= VIEW 3: MERGE PDF WORKSPACE ================= -->
+  <main id="viewMergePdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Merge PDF Files</h2>
+        <p class="text-xs text-slate-500">Select multiple PDF files to combine them into one single document.</p>
+      </div>
+
+      <div onclick="document.getElementById('mergeFileInput').click()" class="border-2 border-dashed border-rose-300 dark:border-rose-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-rose-500 transition">
+        <input type="file" id="mergeFileInput" multiple accept=".pdf" class="hidden">
+        <i class="fa-solid fa-file-pdf text-3xl text-rose-500 mb-2"></i>
+        <p class="text-sm font-semibold">Click to choose multiple PDF files</p>
+      </div>
+
+      <div id="mergeFileList" class="space-y-2"></div>
+
+      <button id="runMergeBtn" disabled class="w-full py-3 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Merge PDF Files Now
+      </button>
     </div>
-  </div>
-</section>
-  <!-- Live PDF Preview Modal -->
-  <div id="previewModal" class="fixed inset-0 z-50 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
-    <div class="bg-white dark:bg-slate-900 w-full max-w-5xl h-[90vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-        <h4 class="font-bold text-base flex items-center gap-2">
-          <i class="fa-solid fa-file-pdf text-indigo-500"></i> PDF Live Preview
-        </h4>
-        <div class="flex items-center gap-2">
-          <button id="modalDownloadBtn" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow">
-            <i class="fa-solid fa-download"></i> Download
-          </button>
-          <button id="closePreviewBtn" class="p-1.5 text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 text-lg">
-            <i class="fa-solid fa-xmark"></i>
-          </button>
-        </div>
+  </main>
+
+  <!-- ================= VIEW 4: SPLIT PDF WORKSPACE ================= -->
+  <main id="viewSplitPdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Split & Extract PDF Pages</h2>
+        <p class="text-xs text-slate-500">Upload a PDF and select specific page ranges to extract.</p>
       </div>
-      <div class="flex-1 bg-slate-100 dark:bg-slate-950 p-2">
-        <iframe id="pdfIframe" class="w-full h-full rounded-xl border border-slate-300 dark:border-slate-800 bg-white" src=""></iframe>
+
+      <div onclick="document.getElementById('splitFileInput').click()" class="border-2 border-dashed border-orange-300 dark:border-orange-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-orange-500 transition">
+        <input type="file" id="splitFileInput" accept=".pdf" class="hidden">
+        <i class="fa-solid fa-scissors text-3xl text-orange-500 mb-2"></i>
+        <p id="splitFileName" class="text-sm font-semibold">Click to choose a PDF file</p>
       </div>
+
+      <div>
+        <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 block mb-1">Page Range to Extract</label>
+        <input type="text" id="splitRangeInput" placeholder="e.g. 1-3, 5" class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-sm">
+        <span class="text-[11px] text-slate-400 mt-1 block">Example: "1-2" extracts pages 1 and 2. Leave blank to export all pages as individual files.</span>
+      </div>
+
+      <button id="runSplitBtn" disabled class="w-full py-3 bg-orange-600 hover:bg-orange-700 disabled:opacity-50 text-white font-semibold rounded-xl shadow transition">
+        Extract Pages & Download
+      </button>
     </div>
-  </div>
+  </main>
 
-  <!-- Crop Modal -->
-  <div id="cropModal" class="fixed inset-0 z-50 bg-black/80 hidden backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col max-h-[90vh]">
-      <div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
-        <h4 class="font-bold text-base">Crop & Edit Image</h4>
-        <button id="closeCropModal" class="text-slate-500 hover:text-slate-800 dark:hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+  <!-- ================= VIEW 5: ROTATE PDF WORKSPACE ================= -->
+  <main id="viewRotatePdf" class="hidden max-w-4xl mx-auto px-4 py-8 flex-1 w-full space-y-6">
+    <button onclick="switchTool('dashboard')" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1.5">
+      <i class="fa-solid fa-arrow-left"></i> Back to All Tools
+    </button>
+    <div class="glass-card p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-xl font-bold">Rotate PDF</h2>
+        <p class="text-xs text-slate-500">Permanently rotate all pages of your PDF document.</p>
       </div>
-      <div class="relative bg-slate-950 flex items-center justify-center flex-1 min-h-[300px] max-h-[55vh] overflow-hidden">
-        <img id="cropImage" class="max-w-full max-h-full" src="" alt="To Crop">
-      </div>
-      <div class="p-4 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-2 justify-between items-center">
-        <div class="flex gap-1.5">
-          <button id="rotateCropBtn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-xs rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-rotate-right mr-1"></i> Rotate</button>
-          <button id="resetCropBtn" class="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-xs rounded-lg font-medium hover:bg-slate-200 dark:hover:bg-slate-700"><i class="fa-solid fa-arrow-rotate-left mr-1"></i> Reset</button>
-        </div>
-        <div class="flex gap-2">
-          <button id="cancelCropBtn" class="px-4 py-2 border border-slate-300 dark:border-slate-700 text-xs rounded-lg font-medium">Cancel</button>
-          <button id="applyCropBtn" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow">Apply Crop</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <script>
-    let images = [];
-    let activeCropIndex = null;
-    let cropper = null;
-    let generatedPdfBlobUrl = null;
-
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-    const imageGrid = document.getElementById('imageGrid');
-    const listControls = document.getElementById('listControls');
-    const itemCount = document.getElementById('itemCount');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const generatePdfBtn = document.getElementById('generatePdfBtn');
-    const directDownloadBtn = document.getElementById('directDownloadBtn');
-    const previewModal = document.getElementById('previewModal');
-    const closePreviewBtn = document.getElementById('closePreviewBtn');
-    const pdfIframe = document.getElementById('pdfIframe');
-    const modalDownloadBtn = document.getElementById('modalDownloadBtn');
-    const cropModal = document.getElementById('cropModal');
-    const cropImage = document.getElementById('cropImage');
-    const closeCropModal = document.getElementById('closeCropModal');
-    const cancelCropBtn = document.getElementById('cancelCropBtn');
-    const applyCropBtn = document.getElementById('applyCropBtn');
-    const rotateCropBtn = document.getElementById('rotateCropBtn');
-    const resetCropBtn = document.getElementById('resetCropBtn');
-    const progressWrapper = document.getElementById('progressWrapper');
-    const progressBar = document.getElementById('progressBar');
-    const progressText = document.getElementById('progressText');
-    const progressPercent = document.getElementById('progressPercent');
-
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-    });
-
-    dropZone.addEventListener('click', () => fileInput.click());
-    dropZone.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      dropZone.classList.add('border-indigo-600');
-    });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-indigo-600'));
-    dropZone.addEventListener('drop', (e) => {
-      e.preventDefault();
-      dropZone.classList.remove('border-indigo-600');
-      handleFiles(e.dataTransfer.files);
-    });
-    fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
-
-    function handleFiles(files) {
-      const validFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
-      if (!validFiles.length) return;
-
-      validFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const img = new Image();
-          img.onload = () => {
-            images.push({
-              dataUrl: e.target.result,
-              name: file.name,
-              width: img.width,
-              height: img.height,
-              rotation: 0
-            });
-            renderGrid();
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      });
-      fileInput.value = '';
-    }
-
-    function renderGrid() {
-      imageGrid.innerHTML = '';
-      if (images.length === 0) {
-        listControls.classList.add('hidden');
-        generatePdfBtn.disabled = true;
-        directDownloadBtn.classList.add('hidden');
-        return;
-      }
-
-      listControls.classList.remove('hidden');
-      itemCount.innerText = images.length;
-      generatePdfBtn.disabled = false;
-
-      images.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'relative group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm flex flex-col';
-        card.innerHTML = `
-          <div class="relative aspect-square bg-slate-100 dark:bg-slate-950 flex items-center justify-center p-2 overflow-hidden">
-            <img src="${item.dataUrl}" style="transform: rotate(${item.rotation}deg);" class="max-h-full max-w-full object-contain transition-transform" />
-            <span class="absolute top-2 left-2 bg-black/60 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">${index + 1}</span>
-          </div>
-          <div class="p-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-1 text-xs">
-            <button onclick="openCropper(${index})" title="Crop Image" class="p-1 hover:text-indigo-600"><i class="fa-solid fa-crop-simple"></i></button>
-            <button onclick="rotateImage(${index})" title="Rotate 90°" class="p-1 hover:text-indigo-600"><i class="fa-solid fa-rotate-right"></i></button>
-            <button onclick="moveImage(${index}, -1)" ${index === 0 ? 'disabled class="opacity-30 p-1"' : 'class="p-1 hover:text-indigo-600"'} title="Move Left"><i class="fa-solid fa-arrow-left"></i></button>
-            <button onclick="moveImage(${index}, 1)" ${index === images.length - 1 ? 'disabled class="opacity-30 p-1"' : 'class="p-1 hover:text-indigo-600"'} title="Move Right"><i class="fa-solid fa-arrow-right"></i></button>
-            <button onclick="deleteImage(${index})" title="Delete" class="p-1 text-rose-500 hover:text-rose-700 ml-auto"><i class="fa-solid fa-trash-can"></i></button>
-          </div>
-        `;
-        imageGrid.appendChild(card);
-      });
-    }
-
-    window.deleteImage = (index) => {
-      images.splice(index, 1);
-      renderGrid();
-    };
-
-    window.moveImage = (index, dir) => {
-      const target = index + dir;
-      if (target < 0 || target >= images.length) return;
-      const temp = images[index];
-      images[index] = images[target];
-      images[target] = temp;
-      renderGrid();
-    };
-
-    window.rotateImage = (index) => {
-      images[index].rotation = (images[index].rotation + 90) % 360;
-      renderGrid();
-    };
-
-    clearAllBtn.addEventListener('click', () => {
-      images = [];
-      renderGrid();
-    });
-
-    window.openCropper = (index) => {
-      activeCropIndex = index;
-      cropImage.src = images[index].dataUrl;
-      cropModal.classList.remove('hidden');
-      if (cropper) cropper.destroy();
-      cropper = new Cropper(cropImage, {
-        viewMode: 1,
-        autoCropArea: 0.9,
-        responsive: true
-      });
-    };
-
-    function closeCropper() {
-      cropModal.classList.add('hidden');
-      if (cropper) {
-        cropper.destroy();
-        cropper = null;
-      }
-      activeCropIndex = null;
-    }
-
-    closeCropModal.addEventListener('click', closeCropper);
-    cancelCropBtn.addEventListener('click', closeCropper);
-    rotateCropBtn.addEventListener('click', () => cropper && cropper.rotate(90));
-    resetCropBtn.addEventListener('click', () => cropper && cropper.reset());
-
-    applyCropBtn.addEventListener('click', () => {
-      if (!cropper || activeCropIndex === null) return;
-      const canvas = cropper.getCroppedCanvas();
-      images[activeCropIndex].dataUrl = canvas.toDataURL('image/jpeg', 0.92);
-      images[activeCropIndex].width = canvas.width;
-      images[activeCropIndex].height = canvas.height;
-      images[activeCropIndex].rotation = 0;
-      closeCropper();
-      renderGrid();
-    });
-
-    function prepareImageData(item) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          const rot = item.rotation;
-
-          if (rot === 90 || rot === 270) {
-            canvas.width = img.height;
-            canvas.height = img.width;
-          } else {
-            canvas.width = img.width;
-            canvas.height = img.height;
-          }
-
-          ctx.translate(canvas.width / 2, canvas.height / 2);
-          ctx.rotate((rot * Math.PI) / 180);
-          ctx.drawImage(img, -img.width / 2, -img.height / 2);
-
-          resolve({
-            dataUrl: canvas.toDataURL('image/jpeg', 0.92),
-            width: canvas.width,
-            height: canvas.height
-          });
-        };
-        img.src = item.dataUrl;
-      });
-    }
-
-    async function generatePdf() {
-      if (!images.length) return;
-      
-      const { jsPDF } = window.jspdf;
-      const sizeOpt = document.getElementById('pageSize').value;
-      const orientOpt = document.getElementById('pageOrientation').value;
-      const margin = parseInt(document.getElementById('pageMargin').value, 10);
-
-      progressWrapper.classList.remove('hidden');
-      progressBar.style.width = '0%';
-      progressPercent.innerText = '0%';
-      generatePdfBtn.disabled = true;
-
-      let doc = null;
-
-      for (let i = 0; i < images.length; i++) {
-        progressText.innerText = `Adding page ${i + 1} of ${images.length}...`;
-        const percent = Math.round(((i + 1) / images.length) * 100);
-        progressBar.style.width = `${percent}%`;
-        progressPercent.innerText = `${percent}%`;
-
-        const processed = await prepareImageData(images[i]);
-
-        let orientation = orientOpt;
-        if (orientation === 'auto') {
-          orientation = processed.width > processed.height ? 'landscape' : 'portrait';
-        }
-
-        let pageWidth, pageHeight;
-
-        if (sizeOpt === 'fit') {
-          const mmW = processed.width * 0.264583;
-          const mmH = processed.height * 0.264583;
-          pageWidth = mmW + (margin * 2);
-          pageHeight = mmH + (margin * 2);
-          
-          if (!doc) {
-            doc = new jsPDF({
-              orientation: pageWidth > pageHeight ? 'landscape' : 'portrait',
-              unit: 'mm',
-              format: [pageWidth, pageHeight]
-            });
-          } else {
-            doc.addPage([pageWidth, pageHeight], pageWidth > pageHeight ? 'landscape' : 'portrait');
-          }
-
-          doc.addImage(processed.dataUrl, 'JPEG', margin, margin, mmW, mmH);
-        } else {
-          const isLandscape = orientation === 'landscape';
-          const format = sizeOpt === 'letter' ? 'letter' : 'a4';
-
-          if (!doc) {
-            doc = new jsPDF({
-              orientation: orientation,
-              unit: 'mm',
-              format: format
-            });
-          } else {
-            doc.addPage(format, orientation);
-          }
-
-          pageWidth = doc.internal.pageSize.getWidth();
-          pageHeight = doc.internal.pageSize.getHeight();
-
-          const printableW = pageWidth - (margin * 2);
-          const printableH = pageHeight - (margin * 2);
-
-          const imgRatio = processed.width / processed.height;
-          let renderW = printableW;
-          let renderH = printableW / imgRatio;
-
-          if (renderH > printableH) {
-            renderH = printableH;
-            renderW = printableH * imgRatio;
-          }
-
-          const posX = margin + (printableW - renderW) / 2;
-          const posY = margin + (printableH - renderH) / 2;
-
-          doc.addImage(processed.dataUrl, 'JPEG', posX, posY, renderW, renderH);
-        }
-      }
-
-      const pdfBlob = doc.output('blob');
-      if (generatedPdfBlobUrl) URL.revokeObjectURL(generatedPdfBlobUrl);
-      generatedPdfBlobUrl = URL.createObjectURL(pdfBlob);
-
-      pdfIframe.src = generatedPdfBlobUrl;
-      previewModal.classList.remove('hidden');
-
-      directDownloadBtn.classList.remove('hidden');
-      const downloadHandler = () => doc.save('converted-images.pdf');
-      directDownloadBtn.onclick = downloadHandler;
-      modalDownloadBtn.onclick = downloadHandler;
-
-      progressWrapper.classList.add('hidden');
-      generatePdfBtn.disabled = false;
-    }
-
-    generatePdfBtn.addEventListener('click', generatePdf);
-    closePreviewBtn.addEventListener('click', () => {
-      previewModal.classList.add('hidden');
-      pdfIframe.src = '';
-    });
-  </script>
-</body>
-</html>
+      <div onclick="document.getElementById('rotateFileInput').click()" class="border-2 border-dashed border-purple-300 dark:border-purple-900/60 rounded-2xl p-8 text-center cursor-pointer hover:border-purple-5
